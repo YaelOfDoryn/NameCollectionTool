@@ -9,12 +9,10 @@ namespace NameCollectionTool.Controllers
     public class PersonNamesController : Controller
     {
         private readonly IPersonNameService _nameService;
-        private readonly IMapper _mapper;
 
-        public PersonNamesController(IPersonNameService nameService, IMapper mapper)
+        public PersonNamesController(IPersonNameService nameService)
         {
             _nameService = nameService;
-            _mapper = mapper;
         }
 
         public IActionResult Index()
@@ -41,15 +39,7 @@ namespace NameCollectionTool.Controllers
         public ActionResult Create(
             [Bind("FirstName,LastName,Gender,Etymology,Tags")] PersonNameViewModel name)
         {
-            if (name!= null)
-            {
-                if (name.Tags.First() != null)
-                {
-                    // Divide up the tags, trim them and add them to the tag list
-                    name.Tags = name.Tags.First().Split(',').Select(x => x.Trim()).ToList();
-                }
-                _nameService.InsertNewName(_mapper.Map<PersonNameDto>(name));
-            }
+            _nameService.InsertNewName(name);
 
             return RedirectToAction("Create",new { executedCreate = true });
         }

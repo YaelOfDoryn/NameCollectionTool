@@ -1,17 +1,20 @@
-﻿using LiteDB;
+﻿using AutoMapper;
+using LiteDB;
 using NameCollectionTool.Dtos;
+using NameCollectionTool.Models;
 using NameCollectionTool.Services.Interfaces;
 
 namespace NameCollectionTool.Services
 {
     public class PersonNameService : IPersonNameService
     {
-        private LiteDatabase db;
         private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
 
-        public PersonNameService(IConfiguration iConfig)
+        public PersonNameService(IConfiguration iConfig, IMapper mapper)
         {
             _configuration = iConfig;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -22,7 +25,7 @@ namespace NameCollectionTool.Services
         /// </returns>
         public List<PersonNameDto> GetAllPersonNames()
         {
-            using (db = new LiteDatabase(_configuration["ConnectionStrings:NamesDB"]))
+            using (var db = new LiteDatabase(_configuration["ConnectionStrings:NamesDB"]))
             {
                 return db.GetCollection<PersonNameDto>(_configuration["CollectionNames:PersonNames"]).Query().ToList();
             }
@@ -31,11 +34,20 @@ namespace NameCollectionTool.Services
         /// <summary>
         /// Inserts a new Person name into the database.
         /// </summary>
-        public void InsertNewName(PersonNameDto name)
+        public void InsertNewName(PersonNameViewModel name)
         {
-            using (db = new LiteDatabase(_configuration["ConnectionStrings:NamesDB"]))
+            if (name != null)
             {
-                db.GetCollection<PersonNameDto>(_configuration["CollectionNames:PersonNames"]).Insert(name);
+                if (name.Tags.First() != null)
+                {
+                    // Divide up the tags, trim them and add them to the tag list
+                    name.Tags = name.Tags.First().Split(',').Select(x => x.Trim()).ToList();
+                }
+
+                using (var db = new LiteDatabase(_configuration["ConnectionStrings:NamesDB"]))
+                {
+                    db.GetCollection<PersonNameDto>(_configuration["CollectionNames:PersonNames"]).Insert(_mapper.Map<PersonNameDto>(name));
+                }
             }
         }
 
@@ -44,7 +56,7 @@ namespace NameCollectionTool.Services
         /// </summary>
         public void DeleteName(int id)
         {
-            using (db = new LiteDatabase(_configuration["ConnectionStrings:NamesDB"]))
+            using (var db = new LiteDatabase(_configuration["ConnectionStrings:NamesDB"]))
             {
                 db.GetCollection<PersonNameDto>(_configuration["CollectionNames:PersonNames"]).Delete(id);
             }
@@ -53,7 +65,7 @@ namespace NameCollectionTool.Services
         /// <summary>
         /// Updates an existing Person name from the database.
         /// </summary>
-        public void UpdateName(PersonNameDto name)
+        public void UpdateName(PersonNameViewModel name)
         {
             throw new NotImplementedException();
         }

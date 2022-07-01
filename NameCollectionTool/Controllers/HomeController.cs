@@ -10,13 +10,11 @@ namespace NameCollectionTool.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IConfiguration _configuration;
         private readonly IPersonNameService _personNameService;
 
         public HomeController(ILogger<HomeController> logger, IConfiguration iConfig, IPersonNameService personNameService)
         {
             _logger = logger;
-            _configuration = iConfig;
             _personNameService = personNameService;
         }
 
