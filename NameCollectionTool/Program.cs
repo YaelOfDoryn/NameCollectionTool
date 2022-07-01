@@ -1,7 +1,11 @@
+using NameCollectionTool.Services;
+using NameCollectionTool.Services.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IPersonNameService, PersonNameService>();
 
 var app = builder.Build();
 
