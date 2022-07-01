@@ -23,8 +23,13 @@ namespace NameCollectionTool.Controllers
         }
 
         // GET: PersonNames/Create
-        public IActionResult Create()
+        public IActionResult Create(bool executedCreate = false)
         {
+            if (executedCreate)
+            {
+                ViewBag.toast = "Name added to the collection!";
+            }
+            
             return View();
         }
 
@@ -36,11 +41,18 @@ namespace NameCollectionTool.Controllers
         public ActionResult Create(
             [Bind("FirstName,LastName,Gender,Etymology,Tags")] PersonNameViewModel name)
         {
-            // Divide up the tags, trim them and add them to the tag list
-            name.Tags = name.Tags.First().Split(',').Select(x => x.Trim()).ToList();
+            if (name!= null)
+            {
+                if (name.Tags.First() != null)
+                {
+                    // Divide up the tags, trim them and add them to the tag list
+                    name.Tags = name.Tags.First().Split(',').Select(x => x.Trim()).ToList();
+                }
+                _nameService.InsertNewName(_mapper.Map<PersonNameDto>(name));
+            }
 
-            _nameService.InsertNewName(_mapper.Map<PersonNameDto>(name));
-            return View();
+            //return View(new PersonNameViewModel());
+            return RedirectToAction("Create",new { executedCreate = true });
         }
 
         public ActionResult Delete(int id, bool? saveChangesError = false)
