@@ -12,7 +12,6 @@ namespace NameCollectionTool.Services
         public PersonNameService(IConfiguration iConfig)
         {
             _configuration = iConfig;
-            db = new LiteDatabase(_configuration["ConnectionStrings:NamesDB"]);
         }
 
         /// <summary>
@@ -23,7 +22,10 @@ namespace NameCollectionTool.Services
         /// </returns>
         public List<PersonNameDto> GetAllPersonNames()
         {
-            return db.GetCollection<PersonNameDto>("PersonNames").Query().ToList();
+            using (db = new LiteDatabase(_configuration["ConnectionStrings:NamesDB"]))
+            {
+                return db.GetCollection<PersonNameDto>(_configuration["CollectionNames:PersonNames"]).Query().ToList();
+            }
         }
 
         /// <summary>
@@ -31,7 +33,10 @@ namespace NameCollectionTool.Services
         /// </summary>
         public void InsertNewName(PersonNameDto name)
         {
-            db.GetCollection<PersonNameDto>("PersonNames").Insert(name);
+            using (db = new LiteDatabase(_configuration["ConnectionStrings:NamesDB"]))
+            {
+                db.GetCollection<PersonNameDto>(_configuration["CollectionNames:PersonNames"]).Insert(name);
+            }
         }
 
         /// <summary>
@@ -39,7 +44,10 @@ namespace NameCollectionTool.Services
         /// </summary>
         public void DeleteName(int id)
         {
-            db.GetCollection<PersonNameDto>("PersonNames").Delete(id);
+            using (db = new LiteDatabase(_configuration["ConnectionStrings:NamesDB"]))
+            {
+                db.GetCollection<PersonNameDto>(_configuration["CollectionNames:PersonNames"]).Delete(id);
+            }
         }
 
         /// <summary>

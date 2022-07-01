@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using NameCollectionTool.Dtos;
 using NameCollectionTool.Models;
 using NameCollectionTool.Services.Interfaces;
 
@@ -7,10 +9,12 @@ namespace NameCollectionTool.Controllers
     public class PersonNamesController : Controller
     {
         private readonly IPersonNameService _nameService;
+        private readonly IMapper _mapper;
 
-        public PersonNamesController(IPersonNameService nameService)
+        public PersonNamesController(IPersonNameService nameService, IMapper mapper)
         {
             _nameService = nameService;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
@@ -30,9 +34,19 @@ namespace NameCollectionTool.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(
-            [Bind("FirstName,LastName,Gender,Etymology,Tags")] PersonNameViewModel personName)
+            [Bind("FirstName,LastName,Gender,Etymology,Tags")] PersonNameViewModel name)
         {
+            // Divide up the tags, trim them and add them to the tag list
+            name.Tags = name.Tags.First().Split(',').Select(x => x.Trim()).ToList();
+
+            _nameService.InsertNewName(_mapper.Map<PersonNameDto>(name));
             return View();
+        }
+
+        public ActionResult Delete(int id, bool? saveChangesError = false)
+        {
+            _nameService.DeleteName(id);
+            return RedirectToAction("Index", "Home");
         }
     }
 }

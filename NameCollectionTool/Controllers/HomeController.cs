@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NameCollectionTool.Dtos;
 using NameCollectionTool.Models;
+using NameCollectionTool.Services.Interfaces;
 using System.Diagnostics;
 
 namespace NameCollectionTool.Controllers
@@ -10,30 +11,23 @@ namespace NameCollectionTool.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IConfiguration _configuration;
+        private readonly IPersonNameService _personNameService;
 
-        public HomeController(ILogger<HomeController> logger, IConfiguration iConfig)
+        public HomeController(ILogger<HomeController> logger, IConfiguration iConfig, IPersonNameService personNameService)
         {
             _logger = logger;
-            _configuration = iConfig; ;
+            _configuration = iConfig;
+            _personNameService = personNameService;
         }
 
         public IActionResult Index()
         {
             HomeViewModel model = new HomeViewModel();
-            using (var db = new LiteDatabase(_configuration["ConnectionStrings:NamesDB"]))
-            {
-                var col = db.GetCollection<PersonNameDto>("PersonNames");
-                // Get data from DB
-                model.PersonNames = col.Query().ToList();
-            };
+
+            model.PersonNames = _personNameService.GetAllPersonNames();
 
             return View(model);
         }
-
-        //public IActionResult Privacy()
-        //{
-        //    return View();
-        //}
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

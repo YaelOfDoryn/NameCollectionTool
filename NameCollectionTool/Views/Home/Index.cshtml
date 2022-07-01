@@ -31,7 +31,8 @@
          <table class="datatable-table table table-striped" id="table">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">Id</th>
+                    <th scope="col"><i class="fa-solid fa-toolbox"></i></th>
                     <th scope="col">Firstname</th>
                     <th scope="col">Lastname</th>
                     <th scope="col">Gender</th>
@@ -44,17 +45,25 @@
             {
                 <tr>
                     <th scope="row">@name.Id</th>
+                    <td><a asp-controller="PersonNames" asp-action="Delete" asp-route-id="@name.Id" style="color: #ff6962"><i class="fa-solid fa-trash"></i></a></td>
                     <td>@name.FirstName</td>
                     <td>@name.LastName</td>
                     <td>@name.Gender</td>
-                    <td>@name.Etymology</td>
+                    <td><a href="@name.Etymology" target="_blank">Link</a></td>
                     <td>
                     @if (name.Tags != null)
                     {  
-                        @foreach (var tag in name.Tags)
-                        {
-                            <span> @tag ,</span>
-                        }
+                        @for (int i = 0; i < name.Tags.Count(); i++)
+                                {
+                                    if (i+1 < name.Tags.Count())
+                                    {
+                                        <span> @name.Tags[i] ,</span>
+                                    }
+                                    else
+                                    {
+                                        <span> @name.Tags[i]</span>
+                                    }
+                                }
                     }
                     </td>
                 </tr>
@@ -81,39 +90,63 @@
          </div>
      </div>
      <div class="card-body">
-         <table class="datatable-table table table-striped" id="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Firstname</th>
-                    <th scope="col">Lastname</th>
-                    <th scope="col">Gender</th>
-                    <th scope="col">Etymology</th>
-                    <th scope="col">Tags</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach (var name in Model.PersonNames)
-            {
-                <tr>
-                    <th scope="row">@name.Id</th>
-                    <td>@name.FirstName</td>
-                    <td>@name.LastName</td>
-                    <td>@name.Gender</td>
-                    <td>@name.Etymology</td>
-                    <td>
-                    @if (name.Tags != null)
-                    {  
-                        @foreach (var tag in name.Tags)
-                        {
-                            <span> @tag ,</span>
-                        }
-                    }
-                    </td>
-                </tr>
-            }
-            </tbody>
-        </table>
+    </div>
+</div>
+
+@*Title names table*@
+ <div class="card mb-4">
+     <div class="card-header">
+         <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-10">
+                    <i class="fa-solid fa-crown"></i>
+                    Title names
+                </div>
+                <div class="col-sm-2" style="text-align:right;">
+                    <a asp-controller="PersonNames" asp-action="Create">Add name</a>
+                </div>
+            </div>
+         </div>
+     </div>
+     <div class="card-body">
+    </div>
+</div>
+
+@*Spell names table*@
+ <div class="card mb-4">
+     <div class="card-header">
+         <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-10">
+                    <i class="fa-solid fa-hand-sparkles"></i>
+                    Spell names
+                </div>
+                <div class="col-sm-2" style="text-align:right;">
+                    <a asp-controller="PersonNames" asp-action="Create">Add name</a>
+                </div>
+            </div>
+         </div>
+     </div>
+     <div class="card-body">
+    </div>
+</div>
+
+@*Artefact names table*@
+ <div class="card mb-4">
+     <div class="card-header">
+         <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-10">
+                    <i class="fa-solid fa-gem"></i>
+                    Artefact names
+                </div>
+                <div class="col-sm-2" style="text-align:right;">
+                    <a asp-controller="PersonNames" asp-action="Create">Add name</a>
+                </div>
+            </div>
+         </div>
+     </div>
+     <div class="card-body">
     </div>
 </div>
 
