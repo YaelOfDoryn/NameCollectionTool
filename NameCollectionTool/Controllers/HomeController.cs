@@ -9,17 +9,18 @@ namespace NameCollectionTool.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IConfiguration _configuration;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IConfiguration iConfig)
         {
             _logger = logger;
+            _configuration = iConfig; ;
         }
 
         public IActionResult Index()
         {
             HomeViewModel model = new HomeViewModel();
-
-            using (var db = new LiteDatabase(@"Filename=C:\Source\NameCollectionTool\NameCollectionTool\Database\NameTest.db;Password=test"))
+            using (var db = new LiteDatabase(_configuration["ConnectionStrings:NamesDB"]))
             {
                 var col = db.GetCollection<PersonNameDto>("PersonNames");
                 // Get data from DB
