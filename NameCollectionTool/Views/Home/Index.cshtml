@@ -49,7 +49,12 @@
                     <td>@name.FirstName</td>
                     <td>@name.LastName</td>
                     <td>@name.Gender</td>
-                    <td><a href="@name.Etymology" target="_blank">Link</a></td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(name.Etymology))
+                            {
+                                <a href="@name.Etymology" target="_blank">Link</a>
+                            }
+                    </td>
                     <td>
                     @if (name.Tags != null)
                     {  
