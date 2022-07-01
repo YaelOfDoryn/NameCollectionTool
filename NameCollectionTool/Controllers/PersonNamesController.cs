@@ -51,7 +51,6 @@ namespace NameCollectionTool.Controllers
                 _nameService.InsertNewName(_mapper.Map<PersonNameDto>(name));
             }
 
-            //return View(new PersonNameViewModel());
             return RedirectToAction("Create",new { executedCreate = true });
         }
 
