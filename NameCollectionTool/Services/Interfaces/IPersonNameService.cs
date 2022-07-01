@@ -7,6 +7,7 @@ namespace NameCollectionTool.Services.Interfaces
     {
         List<PersonNameDto> GetAllPersonNames();
         void InsertNewName(PersonNameViewModel name);
+        public void InsertNewNames(List<PersonNameDto> name);
         void DeleteName(int id);
         void UpdateName(PersonNameViewModel name);
     }

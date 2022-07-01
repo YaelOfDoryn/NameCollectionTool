@@ -19,7 +19,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control"/> <i class="fa-solid fa-circle-info" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></i>
+                <input asp-for="LastName" class="form-control"/>
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -35,7 +35,7 @@
                 <span asp-validation-for="Gender" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Tags" class="control-label"></label>
+                <div><label asp-for="Tags" class="control-label"></label> <i class="fa-solid fa-circle-info" data-toggle="tooltip" data-placement="top" title="Add multiple tags by seperating them with a comma."></i></div>
                 <input asp-for="Tags" class="form-control" />
             </div>
             <div class="form-group">

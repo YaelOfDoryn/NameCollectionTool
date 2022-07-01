@@ -52,6 +52,36 @@ namespace NameCollectionTool.Services
         }
 
         /// <summary>
+        /// Inserts a range of new Person names into the database.
+        /// </summary>
+        public void InsertNewNames(List<PersonNameDto> newSet)
+        {
+            // TODO: Check if there are no doubles in the set that is being added
+
+
+           
+            using (var db = new LiteDatabase(_configuration["ConnectionStrings:NamesDB"]))
+            {
+                List<PersonNameDto> fullSet = db.GetCollection<PersonNameDto>(_configuration["CollectionNames:PersonNames"]).Query().ToList();
+                fullSet.AddRange(newSet); // Add new set to the list
+
+                // First create a list with all the distinct items.
+                // Then remove these from the set, leaving only the doubles.
+                fullSet.RemoveAll(x => fullSet.GroupBy(c => new
+                {
+                    c.FirstName,
+                    c.LastName
+                }).Select(y => y.First()).ToList().Contains(x));
+
+                // Remove the doubles from the new set
+                newSet.RemoveAll(x => fullSet.Contains(x));
+
+                // Add the distinct objects from the new set to the database
+                db.GetCollection<PersonNameDto>(_configuration["CollectionNames:PersonNames"]).InsertBulk((IEnumerable<PersonNameDto>)newSet);
+            }
+        }
+
+        /// <summary>
         /// Removes an existing Person name from the database.
         /// </summary>
         public void DeleteName(int id)
