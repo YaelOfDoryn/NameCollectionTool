@@ -1,0 +1,60 @@
+﻿@model HomeViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div>
+
+</div>
+
+<div>
+    <table class="datatable-table" id="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Firstname</th>
+                <th scope="col">Lastname</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Etymology</th>
+                <th scope="col">Tags</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var name in Model.PersonNames)
+        {
+            <tr>
+                <th scope="row">@name.Id</th>
+                <td>@name.FirstName</td>
+                <td>@name.LastName</td>
+                <td>@name.Gender</td>
+                <td>@name.Etymology</td>
+                <td>
+                    @if (name.Tags != null)
+                    {  
+                        @foreach (var tag in name.Tags)
+                        {
+                            <span> @tag ,</span>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+
+@section scripts {
+     <script>
+        // Enable datatables
+        $(document).ready( function () {
+            $('.datatable-table').DataTable();
+        } );
+    </script>
+}
