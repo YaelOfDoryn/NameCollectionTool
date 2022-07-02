@@ -11,9 +11,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews()
     .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
 
+builder.Services.AddScoped<ICollectionsService, CollectionsService>();
 builder.Services.AddScoped<IPersonNameService, PersonNameService>();
 builder.Services.AddScoped<IPlaceNamesService, PlaceNamesService>();
-builder.Services.AddScoped<ICollectionsService, CollectionsService>();
+builder.Services.AddScoped<ITitleNameService, TitleNameService>();
+builder.Services.AddScoped<ISpellNameService, SpellNameService>();
+builder.Services.AddScoped<IArtefactNameService, ArtefactNameService>();
+builder.Services.AddScoped<IOtherNameService, OtherNameService>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
