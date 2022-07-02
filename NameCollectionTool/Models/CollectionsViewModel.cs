@@ -12,5 +12,6 @@
         public int TitleNamesCount { get; set; }
         public int SpellNamesCount { get; set; }
         public int ArtefactNamesCount { get; set; }
+        public int OtherNamesCount { get; set; }
     }
 }

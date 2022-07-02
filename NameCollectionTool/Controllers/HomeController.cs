@@ -12,11 +12,13 @@ namespace NameCollectionTool.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IPersonNameService _personNameService;
+        private readonly IPlaceNamesService _placeNameService;
 
-        public HomeController(ILogger<HomeController> logger, IConfiguration iConfig, IPersonNameService personNameService)
+        public HomeController(ILogger<HomeController> logger, IConfiguration iConfig, IPersonNameService personNameService, IPlaceNamesService placeNameService)
         {
             _logger = logger;
             _personNameService = personNameService;
+            _placeNameService = placeNameService;
         }
 
         public IActionResult Index()
@@ -24,6 +26,7 @@ namespace NameCollectionTool.Controllers
             HomeViewModel model = new HomeViewModel();
 
             model.PersonNames = _personNameService.GetAllPersonNames();
+            model.PlaceNames = _placeNameService.GetAllNames();
 
             return View(model);
         }

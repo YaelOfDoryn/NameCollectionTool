@@ -24,6 +24,7 @@ namespace NameCollectionTool.Services
             using (var db = new LiteDatabase(_configuration["ConnectionStrings:NamesDB"]))
             {
                 stats.PersonNamesCount = db.GetCollection<PersonNameDto>(_configuration["CollectionNames:PersonNames"]).Query().ToList().Count();
+                stats.PlaceNamesCount = db.GetCollection<PlaceNameDto>(_configuration["CollectionNames:PlaceNames"]).Query().ToList().Count();
             }
 
             return stats;

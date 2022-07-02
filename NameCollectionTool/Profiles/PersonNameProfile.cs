@@ -9,6 +9,7 @@ namespace NameCollectionTool.Profiles
         public PersonNameProfile()
         {
             CreateMap<PersonNameViewModel, PersonNameDto>().ReverseMap();
+            CreateMap<PlaceNameViewModel, PlaceNameDto>().ReverseMap();
         }
     }
 }

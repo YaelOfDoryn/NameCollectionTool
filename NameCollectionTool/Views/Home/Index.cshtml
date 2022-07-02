@@ -85,12 +85,48 @@
                     Place names
                 </div>
                 <div class="col-sm-2" style="text-align:right;">
-                    <a asp-controller="PersonNames" asp-action="Create">Add name</a>
+                    <a asp-controller="PlaceNames" asp-action="Create">Add name</a>
                 </div>
             </div>
          </div>
      </div>
      <div class="card-body">
+         <table class="datatable-table table table-striped" id="table">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col"><i class="fa-solid fa-toolbox"></i></th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Tags</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var name in Model.PlaceNames)
+            {
+                <tr>
+                    <th scope="row">@name.Id</th>
+                    <td><a asp-controller="PlaceNames" asp-action="Delete" asp-route-id="@name.Id" style="color: #ff6962"><i class="fa-solid fa-trash"></i></a></td>
+                    <td>@name.Name</td>
+                    <td>
+                    @if (name.Tags != null)
+                    {  
+                        @for (int i = 0; i < name.Tags.Count(); i++)
+                                {
+                                    if (i+1 < name.Tags.Count())
+                                    {
+                                        <span> @name.Tags[i] ,</span>
+                                    }
+                                    else
+                                    {
+                                        <span> @name.Tags[i]</span>
+                                    }
+                                }
+                    }
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
     </div>
 </div>
 

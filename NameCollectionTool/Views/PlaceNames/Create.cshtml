@@ -1,0 +1,46 @@
+﻿@model PlaceNameViewModel
+
+@{
+    ViewData["Title"] = "Create place name";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Add a new place name to the collection</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div><label asp-for="Tags" class="control-label"></label> <i class="fa-solid fa-circle-info" data-toggle="tooltip" data-placement="top" title="Add multiple tags by seperating them with a comma."></i></div>
+                <input asp-for="Tags" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(ViewBag.toast))
+    {
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000" style="background-color: lightgreen; position: absolute; bottom: 75px; right: 0;">
+            <div class="toast-header">
+                @ViewBag.toast
+            </div>
+        </div>
+    }
+
+
+@section scripts {
+     <script>
+$('.toast').toast('show');
+$('[data-toggle="tooltip"]').tooltip();
+    </script>
+}
