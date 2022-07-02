@@ -3,6 +3,7 @@ using NameCollectionTool.Dtos;
 using NameCollectionTool.Models;
 using NameCollectionTool.Services.Interfaces;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace NameCollectionTool.Controllers
 {
@@ -76,6 +77,20 @@ namespace NameCollectionTool.Controllers
                 }
             }
             return RedirectToAction("Index", "Collections");
+        }
+
+        [HttpGet]
+        public FileContentResult ExportPersonNames()
+        {
+            List<PersonNameDto> namesColl = _personNamesService.GetAllPersonNames();
+            string jsonString = JsonConvert.SerializeObject(namesColl);
+            var fileName = "person_names_collection_export_" + DateTime.UtcNow + ".json";
+            var mimeType = "text/plain";
+            var fileBytes = Encoding.ASCII.GetBytes(jsonString);
+            return new FileContentResult(fileBytes, mimeType)
+            {
+                FileDownloadName = fileName
+            };
         }
     }
 }
