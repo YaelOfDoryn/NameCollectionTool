@@ -92,5 +92,13 @@ namespace NameCollectionTool.Controllers
                 FileDownloadName = fileName
             };
         }
+
+        [HttpGet]
+        public IActionResult DeletePersonNames()
+        {
+            _personNamesService.DropCollection();
+
+            return RedirectToAction("Index", "Collections");
+        }
     }
 }

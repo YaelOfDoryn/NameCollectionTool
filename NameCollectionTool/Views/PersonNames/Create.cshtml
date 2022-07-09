@@ -9,37 +9,45 @@
 </div>
 
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+    <div class="col-xs-12 col-sm-12">
+        <form asp-action="Create" class="form-horizontal">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
+                <div class="col-xs-3 text-right">
+                    <label asp-for="FirstName" class="control-label margin-bottom"></label>
+                </div>
+                <div class="col-xs-9">
+                    <input asp-for="FirstName" class="form-control margin-bottom" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
             </div>
             <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control"/>
+                <div class="col-xs-3 text-right">
+                    <label asp-for="LastName" class="control-label margin-bottom"></label>
+                </div>
+                <div class="col-xs-9">
+                    <input asp-for="LastName" class="form-control margin-bottom"/>
                 <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
             </div>
             <div class="form-group">
-                <label asp-for="Etymology" class="control-label"></label>
-                <input asp-for="Etymology" class="form-control" />
-                <span asp-validation-for="Etymology" class="text-danger"></span>
+                <label asp-for="Etymology" class="control-label margin-bottom"></label>
+                <input asp-for="Etymology" class="form-control margin-bottom" />
+                <span asp-validation-for="Etymology" class="text-danger margin-bottom"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Gender" class="control-label"></label>
-                <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()" class="form-control">
+                <label asp-for="Gender" class="control-label margin-bottom"></label>
+                <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()" class="form-control margin-bottom">
                     <option selected="selected" value="">Please select</option>
                 </select>
                 <span asp-validation-for="Gender" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <div><label asp-for="Tags" class="control-label"></label> <i class="fa-solid fa-circle-info" data-toggle="tooltip" data-placement="top" title="Add multiple tags by seperating them with a comma."></i></div>
-                <input asp-for="Tags" class="form-control" />
+                <div><label asp-for="Tags" class="control-label margin-bottom"></label> <i class="fa-solid fa-circle-info" data-toggle="tooltip" data-placement="top" title="Add multiple tags by seperating them with a comma."></i></div>
+                <input asp-for="Tags" class="form-control margin-bottom" />
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary form-control" />
             </div>
         </form>
     </div>

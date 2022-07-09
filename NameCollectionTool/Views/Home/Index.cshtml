@@ -18,7 +18,7 @@
                     Person names
                 </div>
                 <div class="col-sm-2" style="text-align:right;">
-                    <a asp-controller="PersonNames" asp-action="Create">Add name</a>
+                    <a asp-controller="PersonNames" asp-action="Create" style="color: green" data-toggle="tooltip" data-placement="top" title="Add a new name to the collection."><i class="fa-solid fa-square-plus"></i></a>
                 </div>
             </div>
          </div>
@@ -41,7 +41,7 @@
             {
                 <tr>
                     <th scope="row">@name.Id</th>
-                    <td><a asp-controller="PersonNames" asp-action="Delete" asp-route-id="@name.Id" style="color: #ff6962"><i class="fa-solid fa-trash"></i></a></td>
+                    <td><a asp-controller="PersonNames" asp-action="Delete" asp-route-id="@name.Id" style="color: #ff6962" data-toggle="tooltip" data-placement="top" title="Remove this name from the collection."><i class="fa-solid fa-trash"></i></a></td>
                     <td>@name.FirstName</td>
                     <td>@name.LastName</td>
                     <td>@name.Gender</td>
@@ -194,6 +194,7 @@
         // Enable datatables
         $(document).ready( function () {
             $('.datatable-table').DataTable();
+            $('[data-toggle="tooltip"]').tooltip();
         } );
     </script>
 }

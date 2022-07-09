@@ -1,5 +1,4 @@
-﻿
-@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+﻿@model PersonGenerateParams
 @{
     ViewData["Title"] = "Person names";
 }
@@ -7,6 +6,77 @@
 <div class="text-center">
     <h1 class="display-4">Welcome to your generators</h1>
 </div>
+
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <form asp-action="GeneratePersonName" class="form-horizontal">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <div class="col-xs-3 text-right">
+                    <label asp-for="CanBeMale" class="control-label margin-bottom"></label>
+                    <input  type="checkbox" asp-for="CanBeMale" class="margin-bottom" />
+                    <span asp-validation-for="CanBeMale" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-3 text-right">
+                    <label asp-for="CanBeFemale" class="control-label margin-bottom"></label>
+                    <input  type="checkbox" asp-for="CanBeFemale" class="margin-bottom" />
+                    <span asp-validation-for="CanBeFemale" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-3 text-right">
+                    <label asp-for="CanBeUnisex" class="control-label margin-bottom"></label>
+                    <input  type="checkbox" asp-for="CanBeUnisex" class="margin-bottom" />
+                    <span asp-validation-for="CanBeUnisex" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary form-control" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (Model.PersonNames != null)
+{
+<div class="card mb-4">
+     <div class="card-header">
+         <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-10">
+                    <i class="fa-solid fa-people-group"></i>
+                    Person names
+                </div>
+                <div class="col-sm-2" style="text-align:right;">
+                    <a asp-controller="PersonNames" asp-action="Create" style="color: green" data-toggle="tooltip" data-placement="top" title="Add a new name to the collection."><i class="fa-solid fa-square-plus"></i></a>
+                </div>
+            </div>
+         </div>
+     </div>
+     <div class="card-body">
+         <table class="datatable-table table table-striped" id="table">
+            <thead>
+                <tr>
+                    <th scope="col">Firstname</th>
+                    <th scope="col">Lastname</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var name in Model.PersonNames)
+            {
+                <tr>
+                    <td>@name.FirstName</td>
+                    <td>@name.LastName</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+}
 
 
 @section scripts {

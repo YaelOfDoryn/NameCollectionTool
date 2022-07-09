@@ -116,7 +116,8 @@
                     Person names collection
                 </div>
                 <div class="col-sm-2" style="text-align:right;">
-                    <a asp-controller="Collections" asp-action="EmptyPersonNames" style="color: #ff6962" data-toggle="tooltip" data-placement="top" title="Warning. This will delete your entire person name collection!!!"><i class="fa-solid fa-trash"></i></a>
+                    <a style="color: #ff6962" data-toggle="modal" data-target="#personNamesModal">
+                        <i class="fa-solid fa-trash" data-toggle="tooltip" data-placement="top" title="Warning. This will delete your entire person name collection!!!"></i></a>
                 </div>
             </div>
          </div>
@@ -145,6 +146,30 @@
                 </div>
             </div>
     </div>
+</div>
+
+<!-- Modals -->
+
+<!-- Delete person names modal -->
+<div class="modal" id="personNamesModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Danger zone!</h5>
+        <button type="button" class="btn btn-secondary close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>This action will delete your whole <strong> person names</strong>  collection! If you have not exported it before, you will not be able to recover it!</p>
+      </div>
+      <div class="modal-footer">
+         <a asp-controller="Collections" asp-action="DeletePersonNames" class="btn btn-danger" style="" data-toggle="tooltip" data-placement="top" title="Warning. This will delete your entire person name collection!!!">
+             Delete</a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="card mb-4">
@@ -181,5 +206,8 @@
      <script>
 $('.toast').toast('show');
 $('[data-toggle="tooltip"]').tooltip();
+$('#personNamesModal').on('shown.bs.modal', function() {
+    $('#myInput').trigger('focus')
+});
     </script>
 }
